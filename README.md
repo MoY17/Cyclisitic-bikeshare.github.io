@@ -23,4 +23,4 @@ Statistical summaries of each categories are compared using tools present in R. 
 
 The top 3 recommendations as asked by the stakeholders were presented.<br>
 
-The case study can be read through this [link](https://moy17.github.io/Cyclistic-Bikeshare/).
+The case study can be read through this [link](https://moy17.github.io/Cyclistic-Bikeshare/) and Tableau visualizations are available [here](https://public.tableau.com/app/profile/james.paul.pulayan).
