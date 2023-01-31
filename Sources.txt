@@ -1,0 +1,2 @@
+Chicago border coordinates
+https://en.wikipedia.org/wiki/Module:Location_map/data/United_States_Chicago
