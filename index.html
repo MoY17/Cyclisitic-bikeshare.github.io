@@ -13,7 +13,7 @@
 
 <meta name="date" content="2023-01-28" />
 
-<title>Cyclistic bikeshare analytics</title>
+<title>Case Study: Cyclistic bikeshare data analysis</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,7 +350,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Cyclistic bikeshare analytics</h1>
+<h1 class="title toc-ignore">Case Study: Cyclistic bikeshare data
+analysis</h1>
 <h4 class="author">James Paul Pulayan</h4>
 <h4 class="date">2023-01-28</h4>
 
@@ -377,6 +378,8 @@ processing</strong></a>
 categorical columns as factors</a></li>
 <li><a href="#cleaning-of-rows-with-missing-values" id="toc-cleaning-of-rows-with-missing-values">Cleaning of rows with
 missing values</a></li>
+<li><a href="#unique-count-of-latitudes-and-longitudes-per-station-names" id="toc-unique-count-of-latitudes-and-longitudes-per-station-names">Unique
+count of latitudes and longitudes per station names</a></li>
 <li><a href="#checking-of-station-names-and-ids" id="toc-checking-of-station-names-and-ids">Checking of station names and
 ids</a></li>
 <li><a href="#cleaning-of-the-grid-coordinate-columns" id="toc-cleaning-of-the-grid-coordinate-columns">Cleaning of the grid
@@ -866,7 +869,52 @@ simultaneously as well.</p>
 ## #   end_station_name &lt;chr&gt;, end_station_id &lt;chr&gt;, start_lat &lt;dbl&gt;,
 ## #   start_lng &lt;dbl&gt;, end_lat &lt;dbl&gt;, end_lng &lt;dbl&gt;, member_casual &lt;fct&gt;</code></pre>
 <p><br>These rows with missing values have missing values on the end
-station names and ids as well.</p>
+station names and ids as well.<br></p>
+</div>
+<div id="unique-count-of-latitudes-and-longitudes-per-station-names" class="section level3">
+<h3>Unique count of latitudes and longitudes per station names</h3>
+<p>Unique count of grid coordinates for start station names:</p>
+<pre class="r"><code>tripdata_all2 %&gt;% 
+  group_by(start_station_name) %&gt;% 
+  summarise(count_unique_lat = n_unique(start_lat), count_unique_lng = n_unique(start_lng)) %&gt;% 
+  arrange(desc(count_unique_lat))</code></pre>
+<pre><code>## # A tibble: 1,664 × 3
+##    start_station_name           count_unique_lat count_unique_lng
+##    &lt;chr&gt;                                   &lt;int&gt;            &lt;int&gt;
+##  1 Clinton St &amp; Madison St                  7017             6975
+##  2 Franklin St &amp; Monroe St                  6045             6060
+##  3 Wabash Ave &amp; Grand Ave                   5808             6125
+##  4 St. Clair St &amp; Erie St                   5766             5917
+##  5 Franklin St &amp; Jackson Blvd               5710             5540
+##  6 McClurg Ct &amp; Ohio St                     5683             5351
+##  7 Wells St &amp; Elm St                        5636             5172
+##  8 Clinton St &amp; Washington Blvd             5589             5593
+##  9 Michigan Ave &amp; Lake St                   5526             5989
+## 10 New St &amp; Illinois St                     5476             5496
+## # … with 1,654 more rows</code></pre>
+<p>Unique count of grid coordinates for end station names:</p>
+<pre class="r"><code>tripdata_all2 %&gt;% 
+  group_by(end_station_name) %&gt;% 
+  summarise(count_unique_lat = n_unique(end_lat), count_unique_lng = n_unique(end_lng)) %&gt;% 
+  arrange(desc(count_unique_lat))</code></pre>
+<pre><code>## # A tibble: 1,683 × 3
+##    end_station_name             count_unique_lat count_unique_lng
+##    &lt;chr&gt;                                   &lt;int&gt;            &lt;int&gt;
+##  1 Clinton St &amp; Washington Blvd              300              297
+##  2 Clinton St &amp; Madison St                   291              285
+##  3 Kingsbury St &amp; Kinzie St                  285              300
+##  4 Clark St &amp; Elm St                         258              259
+##  5 Daley Center Plaza                        251              251
+##  6 St. Clair St &amp; Erie St                    244              244
+##  7 Wells St &amp; Huron St                       242              240
+##  8 Ashland Ave &amp; Division St                 235              239
+##  9 Larrabee St &amp; Kingsbury St                234              227
+## 10 Wells St &amp; Concord Ln                     231              227
+## # … with 1,673 more rows</code></pre>
+<p><br>As the count of unique grid coordinates per station names is
+large, these rows of station names with missing values shall be deleted
+as a more comprehensive way of data analysis is needed in filling these
+values.</p>
 <pre class="r"><code>trip_clean1 &lt;- drop_na(tripdata_all2)</code></pre>
 <p><br>Rows with missing values are deleted. The summary of the cleaned
 data set is shown:</p>
