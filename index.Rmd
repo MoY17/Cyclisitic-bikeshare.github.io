@@ -188,13 +188,27 @@ tripdata_all2 %>%
 
 <br>Missing values on end latitude and longitude appear simultaneously as well. 
 
-```{r}
+### Unique count of latitudes and longitudes per station names
+
+Unique count of grid coordinates for start station names:
+
+```{r for start station names}
 tripdata_all2 %>% 
-  filter(is.na(end_lat)&is.na(end_lng)) %>% 
-  filter(!is.na(end_station_name))
+  group_by(start_station_name) %>% 
+  summarise(count_unique_lat = n_unique(start_lat), count_unique_lng = n_unique(start_lng)) %>% 
+  arrange(desc(count_unique_lat))
 ```
 
-<br>These rows with missing values have missing values on the end station names and ids as well.
+Unique count of grid coordinates for end station names:
+
+```{r for end station names}
+tripdata_all2 %>% 
+  group_by(end_station_name) %>% 
+  summarise(count_unique_lat = n_unique(end_lat), count_unique_lng = n_unique(end_lng)) %>% 
+  arrange(desc(count_unique_lat))
+```
+
+<br>As the count of unique grid coordinates per station names is large, these rows of station names with missing values shall be deleted as a more comprehensive way of data analysis is needed in filling these values.
 
 ```{r}
 trip_clean1 <- drop_na(tripdata_all2)

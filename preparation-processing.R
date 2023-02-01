@@ -113,6 +113,17 @@ na_lat_lng
 na_lat_lng %>% 
   filter(!is.na(end_station_name))
 
+##Unique count of latitudes and longitudes per station names
+unique_start_st <- tripdata_all2 %>% 
+  group_by(start_station_name) %>% 
+  summarise(count_unique_lat = n_unique(start_lat), count_unique_lng = n_unique(start_lng)) %>% 
+  arrange(desc(count_unique_lat))
+
+unique_end_st <- tripdata_all2 %>% 
+  group_by(end_station_name) %>% 
+  summarise(count_unique_lat = n_unique(end_lat), count_unique_lng = n_unique(end_lng)) %>% 
+  arrange(desc(count_unique_lat))
+
 #removal of rows with missing values
 trip_clean1 <- drop_na(tripdata_all2)
 skim_without_charts(trip_clean1)
