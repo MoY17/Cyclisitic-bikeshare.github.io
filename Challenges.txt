@@ -1,0 +1,9 @@
+1. Finding the number of missing values in `tripdata_all`.
+  - First using `sum(is.na())` in finding the individual missing values for the variables in the data.
+  - Finding available codes on forums and discussions on the web but the contents mostly suggest using `sum(is.na())`
+  - Scanning from the available packages in Rstudio. The `skimr` package is a package for summarizing data frames then using `skimr::skim_without_charts()` in summarizing `tripdata_all`.
+2. Choosing if the geolocation data should be used in the data analysis.
+  - A proper visualization should be created. The `ggmap` was tested if a density map of Chicago can be created. The package needed an API key to run. As it is nonviable for now to acquire an API key, other R package are tested. Other packages do not have the information on the Chicago map.
+  - It is decided to use Tableau public in visualizing the heat map. Tableau cannot handle the large amount of data, data is aggregated first on RStudio to reduce the file size of the data uploaded on Public Tableau.
+3. Choosing a repository for the data project.
+  - Kaggle was the first choice but as `ggpattern`, an R package, was used on data visualizations which is unavailable on the current version of R in Kaggle then it was decided to use GitHub repository instead.
