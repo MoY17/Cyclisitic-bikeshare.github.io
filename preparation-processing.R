@@ -19,11 +19,20 @@ tripdata_202209 <- read_csv("202209-divvy-publictripdata.csv") #Sep, 2022
 tripdata_202210 <- read_csv("202210-divvy-tripdata.csv") #Oct, 2022
 tripdata_202211 <- read_csv("202211-divvy-tripdata.csv") #Nov, 2022
 
-# Checking column types of the data frames
-str(list(tripdata_202112,tripdata_202201, tripdata_202202))
-str(list(tripdata_202203, tripdata_202204, tripdata_202205))
-str(list(tripdata_202206, tripdata_202207, tripdata_202208))
-str(list(tripdata_202209, tripdata_202210, tripdata_202211))
+#Checking summary of each data set
+skim_without_charts(tripdata_202112)
+skim_without_charts(tripdata_202201)
+skim_without_charts(tripdata_202202)
+skim_without_charts(tripdata_202203)
+skim_without_charts(tripdata_202204)
+skim_without_charts(tripdata_202205)
+
+skim_without_charts(tripdata_202206)
+skim_without_charts(tripdata_202207)
+skim_without_charts(tripdata_202208)
+skim_without_charts(tripdata_202209)
+skim_without_charts(tripdata_202210)
+skim_without_charts(tripdata_202211)
 
 #Checking if `ride_id` is a primary key
 nrow(tripdata_202112) == n_unique(tripdata_202112$ride_id)
