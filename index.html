@@ -384,8 +384,7 @@ count of latitudes and longitudes per station names</a></li>
 ids</a></li>
 <li><a href="#cleaning-of-the-grid-coordinate-columns" id="toc-cleaning-of-the-grid-coordinate-columns">Cleaning of the grid
 coordinate columns</a></li>
-<li><a href="#addition-of-two-new-variables-day-and-month" id="toc-addition-of-two-new-variables-day-and-month">Addition of two new
-variables day and month</a></li>
+<li><a href="#addition-of-new-variables" id="toc-addition-of-new-variables">Addition of new variables</a></li>
 </ul></li>
 <li><a href="#data-analysis" id="toc-data-analysis"><strong>Data
 analysis</strong></a>
@@ -453,10 +452,10 @@ recommended marketing program.<br></p>
 <p>Guide questions for the business task:</p>
 <p>How do annual members and casual riders use Cyclistic bikes
 differently? (The question asked by Moreno)</p>
-<p><strong>Business task</strong> Formulate top 3 recommendations on how
-casual riders may upgrade to annual membership by understanding their
-differences from the result of the analysis of the historical
-data.<br></p>
+<p><strong>Business task</strong></p>
+<p>Formulate top 3 recommendations on how casual riders may upgrade to
+annual membership by understanding their differences from the result of
+the analysis of the historical data.<br></p>
 </div>
 </div>
 <div id="data-preparation" class="section level2">
@@ -489,12 +488,3187 @@ tripdata_202209 &lt;- read_csv(&quot;202209-divvy-publictripdata.csv&quot;) #Sep
 tripdata_202210 &lt;- read_csv(&quot;202210-divvy-tripdata.csv&quot;) #Oct, 2022
 tripdata_202211 &lt;- read_csv(&quot;202211-divvy-tripdata.csv&quot;) #Nov, 2022</code></pre>
 <p><br>The data types are compared and checked. Each have similar
-structures: * ride_id as character * rideable_type as character *
-started_at as datetime * ended_at as datetime * start_station_name as
-character * start_station_id as character * end_station_name as
-character * end_station_id as character * start_lat as numeric *
-start_lng as numeric * end_lat as numeric * end_lng as numeric *
-member_casual as character</p>
+structures:</p>
+<pre class="r"><code>skim_without_charts(tripdata_202112)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202112</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">247540</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">247540</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">51063</td>
+<td align="right">0.79</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">818</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">51063</td>
+<td align="right">0.79</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">816</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">53498</td>
+<td align="right">0.78</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">800</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">53498</td>
+<td align="right">0.78</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">798</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.64</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.67</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">144</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.48</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">144</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.85</td>
+<td align="right">-87.67</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2021-12-01 00:00:01</td>
+<td align="left">2021-12-31 23:59:48</td>
+<td align="left">2021-12-13 13:04:54</td>
+<td align="right">228845</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2021-12-01 00:02:40</td>
+<td align="left">2022-01-03 17:32:18</td>
+<td align="left">2021-12-13 13:18:39</td>
+<td align="right">228657</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202201)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202201</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">103770</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">103770</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">16260</td>
+<td align="right">0.84</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">758</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">16260</td>
+<td align="right">0.84</td>
+<td align="right">3</td>
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">758</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">17927</td>
+<td align="right">0.83</td>
+<td align="right">10</td>
+<td align="right">51</td>
+<td align="right">0</td>
+<td align="right">724</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">17927</td>
+<td align="right">0.83</td>
+<td align="right">3</td>
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">724</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.89</td>
+<td align="right">41.93</td>
+<td align="right">45.64</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.05</td>
+<td align="right">-87.83</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-73.80</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">86</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">86</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.83</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-01-01 00:00:05</td>
+<td align="left">2022-01-31 23:58:37</td>
+<td align="left">2022-01-16 11:50:04</td>
+<td align="right">100315</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-01-01 00:01:48</td>
+<td align="left">2022-02-01 01:46:16</td>
+<td align="left">2022-01-16 12:04:35</td>
+<td align="right">100047</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202202)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202202</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">115609</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">115609</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">18580</td>
+<td align="right">0.84</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">779</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">18580</td>
+<td align="right">0.84</td>
+<td align="right">3</td>
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">779</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">20355</td>
+<td align="right">0.82</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">740</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">20355</td>
+<td align="right">0.82</td>
+<td align="right">3</td>
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">741</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.89</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.89</td>
+<td align="right">41.92</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.83</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.53</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">77</td>
+<td align="right">1</td>
+<td align="right">41.89</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.89</td>
+<td align="right">41.92</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">77</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.83</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.53</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-02-01 00:03:18</td>
+<td align="left">2022-02-28 23:58:44</td>
+<td align="left">2022-02-16 09:52:54</td>
+<td align="right">110689</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-02-01 00:09:37</td>
+<td align="left">2022-03-01 08:55:17</td>
+<td align="left">2022-02-16 10:04:33</td>
+<td align="right">110615</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202203)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202203</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">284042</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">284042</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">47246</td>
+<td align="right">0.83</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">843</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">47246</td>
+<td align="right">0.83</td>
+<td align="right">3</td>
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">843</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">51157</td>
+<td align="right">0.82</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">834</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">51157</td>
+<td align="right">0.82</td>
+<td align="right">3</td>
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">834</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">266</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.64</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">266</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.51</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-03-01 00:00:19</td>
+<td align="left">2022-03-31 23:59:47</td>
+<td align="left">2022-03-16 17:36:55</td>
+<td align="right">255089</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-03-01 00:04:30</td>
+<td align="left">2022-04-01 22:10:12</td>
+<td align="left">2022-03-16 17:57:34</td>
+<td align="right">255324</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202204)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202204</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">371249</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">371249</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">70887</td>
+<td align="right">0.81</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">840</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">70887</td>
+<td align="right">0.81</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">840</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">75288</td>
+<td align="right">0.80</td>
+<td align="right">10</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">837</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">75288</td>
+<td align="right">0.80</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">836</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.83</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">317</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.63</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.08</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">317</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.85</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-04-01 00:01:48</td>
+<td align="left">2022-04-30 23:59:54</td>
+<td align="left">2022-04-17 18:58:38</td>
+<td align="right">326625</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-04-01 00:02:15</td>
+<td align="left">2022-05-02 00:35:01</td>
+<td align="left">2022-04-17 19:18:53</td>
+<td align="right">327349</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202205)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202205</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">634858</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">634858</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">86704</td>
+<td align="right">0.86</td>
+<td align="right">9</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">1085</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">86704</td>
+<td align="right">0.86</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1050</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">93171</td>
+<td align="right">0.85</td>
+<td align="right">9</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">1091</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">93171</td>
+<td align="right">0.85</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1054</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">722</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.64</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.11</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">722</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-88.14</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-05-01 00:00:06</td>
+<td align="left">2022-05-31 23:59:56</td>
+<td align="left">2022-05-17 17:16:13</td>
+<td align="right">522964</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-05-01 00:05:17</td>
+<td align="left">2022-06-02 11:35:01</td>
+<td align="left">2022-05-17 17:31:30</td>
+<td align="right">524841</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202206)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202206</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">769204</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">769204</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">92944</td>
+<td align="right">0.88</td>
+<td align="right">7</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1232</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">92944</td>
+<td align="right">0.88</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1115</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">100152</td>
+<td align="right">0.87</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1246</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">100152</td>
+<td align="right">0.87</td>
+<td align="right">3</td>
+<td align="right">36</td>
+<td align="right">0</td>
+<td align="right">1127</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.91</td>
+<td align="right">0.04</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">1055</td>
+<td align="right">1</td>
+<td align="right">41.91</td>
+<td align="right">0.04</td>
+<td align="right">41.63</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.11</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">1055</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.92</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.51</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-06-01 00:00:04</td>
+<td align="left">2022-06-30 23:59:58</td>
+<td align="left">2022-06-17 09:35:34</td>
+<td align="right">617356</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-06-01 00:02:38</td>
+<td align="left">2022-07-13 04:21:06</td>
+<td align="left">2022-06-17 09:54:49</td>
+<td align="right">620434</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202207)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202207</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">823488</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">823488</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">112031</td>
+<td align="right">0.86</td>
+<td align="right">7</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1198</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">112031</td>
+<td align="right">0.86</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1147</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">120951</td>
+<td align="right">0.85</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1210</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">120951</td>
+<td align="right">0.85</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1161</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.04</td>
+<td align="right">41.64</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">947</td>
+<td align="right">1</td>
+<td align="right">41.91</td>
+<td align="right">0.04</td>
+<td align="right">41.62</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.37</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">947</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.92</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-07-01 00:00:01</td>
+<td align="left">2022-07-31 23:59:58</td>
+<td align="left">2022-07-16 21:27:40</td>
+<td align="right">659247</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-07-01 00:06:23</td>
+<td align="left">2022-08-04 13:53:01</td>
+<td align="left">2022-07-16 21:51:13</td>
+<td align="right">662007</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202208)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202208</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">785932</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">785932</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">112037</td>
+<td align="right">0.86</td>
+<td align="right">7</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1245</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">112037</td>
+<td align="right">0.86</td>
+<td align="right">3</td>
+<td align="right">36</td>
+<td align="right">0</td>
+<td align="right">1190</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">120522</td>
+<td align="right">0.85</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1235</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">120522</td>
+<td align="right">0.85</td>
+<td align="right">3</td>
+<td align="right">36</td>
+<td align="right">0</td>
+<td align="right">1184</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.91</td>
+<td align="right">0.04</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">843</td>
+<td align="right">1</td>
+<td align="right">41.91</td>
+<td align="right">0.04</td>
+<td align="right">41.60</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.12</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">843</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-88.05</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.50</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-08-01 00:00:00</td>
+<td align="left">2022-08-31 23:59:39</td>
+<td align="left">2022-08-16 19:07:53</td>
+<td align="right">634863</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-08-01 00:05:00</td>
+<td align="left">2022-09-06 21:49:04</td>
+<td align="left">2022-08-16 19:27:06</td>
+<td align="right">637009</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202209)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202209</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">701339</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">701339</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">103780</td>
+<td align="right">0.85</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1241</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">103780</td>
+<td align="right">0.85</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1130</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">111185</td>
+<td align="right">0.84</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1248</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">111185</td>
+<td align="right">0.84</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1135</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.65</td>
+<td align="right">-87.63</td>
+<td align="right">-87.53</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">712</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.55</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.15</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">712</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.92</td>
+<td align="right">-87.66</td>
+<td align="right">-87.65</td>
+<td align="right">-87.63</td>
+<td align="right">-87.30</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-09-01 00:00:05</td>
+<td align="left">2022-09-30 23:59:56</td>
+<td align="left">2022-09-15 17:27:43</td>
+<td align="right">574082</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-09-01 00:02:47</td>
+<td align="left">2022-10-05 19:53:11</td>
+<td align="left">2022-09-15 17:43:52</td>
+<td align="right">575107</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202210)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202210</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">558685</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">558685</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">91355</td>
+<td align="right">0.84</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1100</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">91355</td>
+<td align="right">0.84</td>
+<td align="right">3</td>
+<td align="right">36</td>
+<td align="right">0</td>
+<td align="right">1068</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">96617</td>
+<td align="right">0.83</td>
+<td align="right">10</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">1108</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">96617</td>
+<td align="right">0.83</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1070</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.64</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.53</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">475</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.59</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.13</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">475</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.87</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-10-01 00:00:15</td>
+<td align="left">2022-10-31 23:59:33</td>
+<td align="left">2022-10-15 15:09:17</td>
+<td align="right">474070</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-10-01 00:01:05</td>
+<td align="left">2022-11-07 04:53:58</td>
+<td align="left">2022-10-15 15:29:01</td>
+<td align="right">474958</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>skim_without_charts(tripdata_202211)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tripdata_202211</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">337735</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">13</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="24%" />
+<col width="12%" />
+<col width="18%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ride_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">337735</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">rideable_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">11</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">start_station_name</td>
+<td align="right">51957</td>
+<td align="right">0.85</td>
+<td align="right">10</td>
+<td align="right">49</td>
+<td align="right">0</td>
+<td align="right">1062</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">start_station_id</td>
+<td align="right">51957</td>
+<td align="right">0.85</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1037</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">end_station_name</td>
+<td align="right">54259</td>
+<td align="right">0.84</td>
+<td align="right">10</td>
+<td align="right">49</td>
+<td align="right">0</td>
+<td align="right">1068</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">end_station_id</td>
+<td align="right">54259</td>
+<td align="right">0.84</td>
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1040</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">member_casual</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_lat</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.05</td>
+<td align="right">41.65</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.07</td>
+</tr>
+<tr class="even">
+<td align="left">start_lng</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.03</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.64</td>
+<td align="right">-87.63</td>
+<td align="right">-87.52</td>
+</tr>
+<tr class="odd">
+<td align="left">end_lat</td>
+<td align="right">230</td>
+<td align="right">1</td>
+<td align="right">41.90</td>
+<td align="right">0.21</td>
+<td align="right">0.00</td>
+<td align="right">41.88</td>
+<td align="right">41.90</td>
+<td align="right">41.93</td>
+<td align="right">42.08</td>
+</tr>
+<tr class="even">
+<td align="left">end_lng</td>
+<td align="right">230</td>
+<td align="right">1</td>
+<td align="right">-87.65</td>
+<td align="right">0.43</td>
+<td align="right">-87.84</td>
+<td align="right">-87.66</td>
+<td align="right">-87.65</td>
+<td align="right">-87.63</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">started_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-11-01 00:00:05</td>
+<td align="left">2022-11-30 23:56:11</td>
+<td align="left">2022-11-10 18:12:27</td>
+<td align="right">300238</td>
+</tr>
+<tr class="even">
+<td align="left">ended_at</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2022-11-01 00:03:50</td>
+<td align="left">2022-12-01 11:45:53</td>
+<td align="left">2022-11-10 18:26:30</td>
+<td align="right">300541</td>
+</tr>
+</tbody>
+</table>
 <p>To explore and analyze the data as a whole, the 12 data sets should
 be joined.<br></p>
 <pre class="r"><code>tripdata_all &lt;- tripdata_202112 %&gt;% 
@@ -1462,8 +4636,8 @@ head(trip_clean5)</code></pre>
 ## #   end_lng &lt;dbl&gt;, member_casual &lt;fct&gt;, and abbreviated variable names
 ## #   ¹​rideable_type, ²​start_station_id, ³​end_station_id</code></pre>
 </div>
-<div id="addition-of-two-new-variables-day-and-month" class="section level3">
-<h3>Addition of two new variables day and month</h3>
+<div id="addition-of-new-variables" class="section level3">
+<h3>Addition of new variables</h3>
 <p>The initial time of ride, represented by the variable
 <code>started_at</code>, and the final time of ride, represented by the
 variable <code>ended_at</code>, are POSIXct date times. A new variable
@@ -2044,9 +5218,8 @@ based on location should be administered on the <strong>center</strong>
 of the town.<br></p></li>
 </ol>
 <p><br></p>
-<div id="thank-you-for-reading-comments-and-suggestions-are-gladly-accepted." class="section level4">
-<h4>Thank you for reading! Comments and suggestions are gladly
-accepted.</h4>
+<div id="thank-you-for-reading" class="section level4">
+<h4>Thank you for reading!</h4>
 <p><br></p>
 </div>
 </div>
